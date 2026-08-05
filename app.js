@@ -1,7 +1,7 @@
 // ==========================================
 // 1. SECURITY & PANIC ENGINE
 // ==========================================
-const TARGET_HASH = "8f3e5b61e0b5ef3d683bf1e013bf69ecbc17e00e0efc562e1a3bc89bbf3fa009";
+const TARGET_HASH = "6276b65f2157a26177f833f4a823351ed567c530b8b7be59ff426fbbd4d09925";
 
 let isUnlocked = false;
 let isDrawingMode = false;
