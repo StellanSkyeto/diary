@@ -1,0 +1,2 @@
+# diary
+secret diary
