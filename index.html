@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nhật Ký của Skyeto | Light Edition</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Thư viện mã hóa AES chuẩn quốc tế -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+
+  <!-- Header & Authentication -->
+  <header class="diary-header">
+    <div class="logo">SKYE<span>TO</span> DIARY</div>
+    <div class="auth-box">
+      <input type="password" id="passInput" placeholder="Mật khẩu..." />
+      <button id="unlockBtn" class="btn btn-primary">🔓 Xác minh</button>
+      <button id="panicBtn" class="btn btn-danger hidden">🚨 THOÁT (ESC)</button>
+    </div>
+  </header>
+
+  <!-- Toolbar (Hiện khi Unlock thành công) -->
+  <div id="editorToolbar" class="toolbar hidden">
+    <div class="tool-group">
+      <label class="btn btn-tool">
+        📷 Ảnh <input type="file" id="imageUploader" accept="image/*" hidden>
+      </label>
+      <button class="btn btn-tool" id="addTextBtn">🔤 Thêm Chữ</button>
+    </div>
+
+    <div class="tool-group">
+      <button class="btn btn-tool" id="drawModeBtn">✏️ Vẽ tay</button>
+      <input type="color" id="brushColor" value="#142b4c" title="Màu cọ">
+      <input type="range" id="brushSize" min="1" max="50" value="5" title="Kích thước cọ">
+      <label class="smooth-label"><input type="checkbox" id="smoothToggle" checked> Chống rung</label>
+    </div>
+
+    <div class="tool-group">
+      <button class="btn btn-danger" id="deleteObjBtn">🗑️ Xóa</button>
+      <button class="btn btn-success" id="saveDiaryBtn">💾 Lưu Nhật Ký</button>
+    </div>
+  </div>
+
+  <!-- Workspace Canvas Container -->
+  <main class="workspace" id="workspace">
+    <canvas id="drawingCanvas"></canvas>
+    <div id="stage" class="stage"></div>
+  </main>
+
+  <!-- Đã fix bug: Chỉ nạp file app.js 1 lần duy nhất ở cuối body -->
+  <script src="app.js"></script>
+</body>
+</html>
