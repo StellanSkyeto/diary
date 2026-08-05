@@ -1,12 +1,12 @@
 :root {
   --bg-color: #f8fafc;
   --panel-bg: #ffffff;
-  --accent-color: #142b4c; /* Mã màu HEX Skyeto Lore */
+  --accent-color: #142b4c;
   --accent-hover: #1e3a8a;
   --text-color: #1e293b;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -23,7 +23,7 @@ body {
   color: var(--text-color);
   overflow: hidden;
   height: 100vh;
-  height: 100dvh; /* Chuẩn mới cho mobile trình duyệt */
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -49,26 +49,16 @@ body {
 }
 .logo span { color: #2563eb; }
 
-.auth-box {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
+.auth-box { display: flex; gap: 8px; align-items: center; }
 
-input[type="password"], input[type="text"] {
+input[type="password"], input[type="text"], .select-input {
   background: #f1f5f9;
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   outline: none;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-input[type="password"]:focus {
-  border-color: var(--accent-color);
-  background: #fff;
+  font-size: 13px;
 }
 
 /* Toolbar */
@@ -83,11 +73,7 @@ input[type="password"]:focus {
   overflow-x: auto;
   white-space: nowrap;
   z-index: 20;
-  -webkit-overflow-scrolling: touch;
 }
-
-.toolbar::-webkit-scrollbar { height: 4px; }
-.toolbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
 .tool-group {
   display: flex;
@@ -102,7 +88,7 @@ input[type="password"]:focus {
   background: #f1f5f9;
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
@@ -110,24 +96,12 @@ input[type="password"]:focus {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.2s;
 }
 
-.btn:active { transform: scale(0.96); }
 .btn-primary { background: var(--accent-color); color: #fff; border: none; }
-.btn-primary:hover { background: var(--accent-hover); }
 .btn-danger { background: #ef4444; color: #fff; border: none; }
 .btn-success { background: #10b981; color: #fff; border: none; }
 .btn-tool.active { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; }
-
-.smooth-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
 
 .hidden { display: none !important; }
 
@@ -137,7 +111,7 @@ input[type="password"]:focus {
   position: relative;
   background: #ffffff;
   background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 20px 20px; /* Họa tiết chấm caro tập học sinh */
+  background-size: 20px 20px;
   overflow: hidden;
 }
 
@@ -159,20 +133,39 @@ input[type="password"]:focus {
   z-index: 5;
 }
 
-/* Transformable Objects */
+/* Transformable Objects & Bounding Box */
 .diary-object {
   position: absolute;
   cursor: move;
   display: inline-block;
   padding: 6px;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 4px;
   touch-action: none;
 }
 
 .diary-object.selected {
-  border: 2px dashed #2563eb;
-  background: rgba(37, 99, 235, 0.03);
+  border: 1.5px dashed #2563eb;
+  background: rgba(37, 99, 235, 0.02);
+}
+
+/* Nút/Góc ô vuông dùng để chạm vào kéo Phóng to (Resize Handle) */
+.resize-handle {
+  display: none;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #2563eb;
+  border: 2px solid #ffffff;
+  border-radius: 2px;
+  bottom: -6px;
+  right: -6px;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.diary-object.selected .resize-handle {
+  display: block;
 }
 
 .editable-text {
@@ -182,12 +175,17 @@ input[type="password"]:focus {
   min-width: 60px;
   padding: 4px;
   user-select: text;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-/* CSS Mobile Responsive */
+.shape-node {
+  display: block;
+  pointer-events: none;
+}
+
 @media (max-width: 640px) {
   .diary-header { padding: 0 10px; }
   .logo { font-size: 0.95rem; }
-  input[type="password"] { width: 130px; font-size: 12px; }
-  .btn { padding: 6px 10px; font-size: 12px; }
+  input[type="password"] { width: 110px; }
 	}

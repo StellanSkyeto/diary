@@ -1,54 +1,82 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nhật Ký của Skyeto | Light Edition</title>
+  <title>Skyeto's Diary | Official Editor</title>
+  
+  <!-- Web App Manifest (Hỗ trợ thêm Web Application ra màn hình chính) -->
+  <link rel="manifest" href="data:application/json,{%22name%22:%22Skyeto%20Diary%22,%22short_name%22:%22SkyetoDiary%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffffff%22,%22theme_color%22:%22%23142b4c%22}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
   <link rel="stylesheet" href="style.css">
-  <!-- Thư viện mã hóa AES chuẩn quốc tế -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
 
-  <!-- Header & Authentication -->
+  <!-- Header Section -->
   <header class="diary-header">
     <div class="logo">SKYE<span>TO</span> DIARY</div>
     <div class="auth-box">
-      <input type="password" id="passInput" placeholder="Mật khẩu..." />
-      <button id="unlockBtn" class="btn btn-primary">🔓 Xác minh</button>
-      <button id="panicBtn" class="btn btn-danger hidden">🚨 THOÁT (ESC)</button>
+      <input type="password" id="passInput" placeholder="Password..." />
+      <button id="unlockBtn" class="btn btn-primary">🔓 Unlock</button>
+      <button id="panicBtn" class="btn btn-danger hidden">🚨 PANIC (ESC)</button>
     </div>
   </header>
 
-  <!-- Toolbar (Hiện khi Unlock thành công) -->
+  <!-- Editor Toolbar (English Version) -->
   <div id="editorToolbar" class="toolbar hidden">
+    <!-- Media & Text Tools -->
     <div class="tool-group">
       <label class="btn btn-tool">
-        📷 Ảnh <input type="file" id="imageUploader" accept="image/*" hidden>
+        📷 Image <input type="file" id="imageUploader" accept="image/*" hidden>
       </label>
-      <button class="btn btn-tool" id="addTextBtn">🔤 Thêm Chữ</button>
+      <button class="btn btn-tool" id="addTextBtn">🔤 Add Text</button>
     </div>
 
+    <!-- Typography Controls -->
     <div class="tool-group">
-      <button class="btn btn-tool" id="drawModeBtn">✏️ Vẽ tay</button>
-      <input type="color" id="brushColor" value="#142b4c" title="Màu cọ">
-      <input type="range" id="brushSize" min="1" max="50" value="5" title="Kích thước cọ">
-      <label class="smooth-label"><input type="checkbox" id="smoothToggle" checked> Chống rung</label>
+      <select id="fontFamilySelect" class="select-input" title="Font Family">
+        <option value="Inter, sans-serif">Sans-Serif</option>
+        <option value="'Courier New', monospace">Monospace (Code)</option>
+        <option value="'Georgia', serif">Serif (Classic)</option>
+        <option value="'Comic Sans MS', cursive">Comic / Chill</option>
+      </select>
+      <input type="number" id="fontSizeInput" value="18" min="10" max="72" style="width: 50px;" title="Font Size">
+      <input type="color" id="textColorInput" value="#142b4c" title="Text Color">
     </div>
 
+    <!-- Shapes Importer -->
     <div class="tool-group">
-      <button class="btn btn-danger" id="deleteObjBtn">🗑️ Xóa</button>
-      <button class="btn btn-success" id="saveDiaryBtn">💾 Lưu Nhật Ký</button>
+      <span>Shapes:</span>
+      <button class="btn btn-icon" id="addSquareBtn">⬛</button>
+      <button class="btn btn-icon" id="addCircleBtn">🔴</button>
+      <button class="btn btn-icon" id="addTriangleBtn">🔺</button>
+    </div>
+
+    <!-- Brush & Canvas Engine -->
+    <div class="tool-group">
+      <button class="btn btn-tool" id="drawModeBtn">✏️ Draw Mode</button>
+      <input type="color" id="brushColor" value="#142b4c" title="Brush Color">
+      <input type="range" id="brushSize" min="1" max="50" value="5" title="Brush Size">
+      <label class="smooth-label"><input type="checkbox" id="smoothToggle" checked> Smooth</label>
+    </div>
+
+    <!-- System Controls -->
+    <div class="tool-group">
+      <button class="btn btn-danger" id="deleteObjBtn">🗑️ Delete</button>
+      <button class="btn btn-success" id="saveDiaryBtn">💾 Save Entry</button>
     </div>
   </div>
 
-  <!-- Workspace Canvas Container -->
+  <!-- Workspace Container -->
   <main class="workspace" id="workspace">
     <canvas id="drawingCanvas"></canvas>
     <div id="stage" class="stage"></div>
   </main>
 
-  <!-- Đã fix bug: Chỉ nạp file app.js 1 lần duy nhất ở cuối body -->
   <script src="app.js"></script>
 </body>
 </html>
