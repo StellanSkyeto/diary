@@ -1,0 +1,22 @@
+{
+  "name": "Skyeto Markdown Diary",
+  "short_name": "Skyeto Diary",
+  "description": "Encrypted Markdown Diary App",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./diary.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./diary.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
