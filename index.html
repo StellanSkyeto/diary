@@ -2,80 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Skyeto's Diary | Official Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skyeto's Markdown Diary</title>
   
-  <!-- Web App Manifest (Hỗ trợ thêm Web Application ra màn hình chính) -->
-  <link rel="manifest" href="data:application/json,{%22name%22:%22Skyeto%20Diary%22,%22short_name%22:%22SkyetoDiary%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffffff%22,%22theme_color%22:%22%23142b4c%22}">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
   <link rel="stylesheet" href="style.css">
+  <!-- Thư viện mã hóa CryptoJS & Thư viện dịch Markdown Marked.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
-  <!-- Header Section -->
-  <header class="diary-header">
-    <div class="logo">SKYE<span>TO</span> DIARY</div>
-    <div class="auth-box">
-      <input type="password" id="passInput" placeholder="Password..." />
-      <button id="unlockBtn" class="btn btn-primary">🔓 Unlock</button>
-      <button id="panicBtn" class="btn btn-danger hidden">🚨 PANIC (ESC)</button>
-    </div>
-  </header>
-
-  <!-- Editor Toolbar (English Version) -->
-  <div id="editorToolbar" class="toolbar hidden">
-    <!-- Media & Text Tools -->
-    <div class="tool-group">
-      <label class="btn btn-tool">
-        📷 Image <input type="file" id="imageUploader" accept="image/*" hidden>
-      </label>
-      <button class="btn btn-tool" id="addTextBtn">🔤 Add Text</button>
-    </div>
-
-    <!-- Typography Controls -->
-    <div class="tool-group">
-      <select id="fontFamilySelect" class="select-input" title="Font Family">
-        <option value="Inter, sans-serif">Sans-Serif</option>
-        <option value="'Courier New', monospace">Monospace (Code)</option>
-        <option value="'Georgia', serif">Serif (Classic)</option>
-        <option value="'Comic Sans MS', cursive">Comic / Chill</option>
-      </select>
-      <input type="number" id="fontSizeInput" value="18" min="10" max="72" style="width: 50px;" title="Font Size">
-      <input type="color" id="textColorInput" value="#142b4c" title="Text Color">
-    </div>
-
-    <!-- Shapes Importer -->
-    <div class="tool-group">
-      <span>Shapes:</span>
-      <button class="btn btn-icon" id="addSquareBtn">⬛</button>
-      <button class="btn btn-icon" id="addCircleBtn">🔴</button>
-      <button class="btn btn-icon" id="addTriangleBtn">🔺</button>
-    </div>
-
-    <!-- Brush & Canvas Engine -->
-    <div class="tool-group">
-      <button class="btn btn-tool" id="drawModeBtn">✏️ Draw Mode</button>
-      <input type="color" id="brushColor" value="#142b4c" title="Brush Color">
-      <input type="range" id="brushSize" min="1" max="50" value="5" title="Brush Size">
-      <label class="smooth-label"><input type="checkbox" id="smoothToggle" checked> Smooth</label>
-    </div>
-
-    <!-- System Controls -->
-    <div class="tool-group">
-      <button class="btn btn-danger" id="deleteObjBtn">🗑️ Delete</button>
-      <button class="btn btn-success" id="saveDiaryBtn">💾 Save Entry</button>
+  <!-- 1. Minimalist Auth Screen -->
+  <div id="authScreen" class="auth-container">
+    <div class="auth-card">
+      <h2>SKYE<span>TO</span> DIARY</h2>
+      <p>Enter your secret key to unlock</p>
+      <div class="input-group">
+        <input type="password" id="passInput" placeholder="Password..." autofocus />
+        <button id="unlockBtn">Unlock 🔓</button>
+      </div>
     </div>
   </div>
 
-  <!-- Workspace Container -->
-  <main class="workspace" id="workspace">
-    <canvas id="drawingCanvas"></canvas>
-    <div id="stage" class="stage"></div>
-  </main>
+  <!-- 2. Main Editor Screen -->
+  <div id="editorApp" class="app-container hidden">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand">SKYE<span>TO</span> MD</div>
+      <div class="actions">
+        <label class="btn-action">
+          🖼️ Insert Image <input type="file" id="imgUploader" accept="image/*" hidden>
+        </label>
+        <button id="downloadBtn" class="btn-action btn-download">📥 Download Diary.md</button>
+        <button id="saveBtn" class="btn-action btn-save">💾 Save Encrypted</button>
+      </div>
+    </header>
+
+    <!-- Split Editor Workspace -->
+    <main class="workspace">
+      <!-- Left: Code Input -->
+      <section class="pane editor-pane">
+        <div class="pane-header">MARKDOWN INPUT</div>
+        <textarea id="markdownInput" placeholder="Write your diary in Markdown here...&#10;&#10;# Title&#10;Today was a great day..."></textarea>
+      </section>
+
+      <!-- Right: Live Preview -->
+      <section class="pane preview-pane">
+        <div class="pane-header">LIVE PREVIEW</div>
+        <div id="markdownPreview" class="preview-content"></div>
+      </section>
+    </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
