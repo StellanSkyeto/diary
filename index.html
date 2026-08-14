@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skyeto's Markdown Diary</title>
   
-  <link rel="stylesheet" href="style.css">
-  <!-- Thư viện mã hóa CryptoJS & Thư viện dịch Markdown Marked.js -->
+  <!-- 1. ICON CHO TRÌNH DUYỆT VÀ IOS SAFARI -->
+  <link rel="icon" type="image/png" href="./diary.png">
+  <link rel="apple-touch-icon" href="./diary.png">
+  
+  <!-- 2. KHAI BÁO PWA MANIFEST & TỐI ƯU CHO IOS -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Skyeto Diary">
+
+  <!-- 3. CSS VÀ THƯ VIỆN -->
+  <link rel="stylesheet" href="./style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -29,10 +40,10 @@
     <!-- Top Header -->
     <header class="app-header">
       <div class="brand">SKYE<span>TO</span> MD</div>
-<div class="actions">
-  <button id="downloadBtn" class="btn-action btn-download">📥 Download Diary.md</button>
-  <button id="saveBtn" class="btn-action btn-save">💾 Save Encrypted</button>
-</div>
+      <div class="actions">
+        <button id="downloadBtn" class="btn-action btn-download">📥 Download Diary.md</button>
+        <button id="saveBtn" class="btn-action btn-save">💾 Save Encrypted</button>
+      </div>
     </header>
 
     <!-- Split Editor Workspace -->
@@ -51,6 +62,18 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <!-- JS CHÍNH -->
+  <script src="./app.js"></script>
+
+  <!-- 4. ĐĂNG KÝ SERVICE WORKER PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('PWA SW Registered!'))
+          .catch(err => console.log('SW Reg failed: ', err));
+      });
+    }
+  </script>
 </body>
 </html>
